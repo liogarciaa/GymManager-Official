@@ -1,0 +1,295 @@
+<UserControl x:Class="GymManager.Views.ConfiguracionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#e1e1e2"
+             FontFamily="Segoe UI"
+             Loaded="UserControl_Loaded"
+             UseLayoutRounding="True"
+             SnapsToDevicePixels="True"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType">
+
+    <UserControl.Resources>
+        <!-- Estilo base para tarjetas y contenedores. -->
+        <Style x:Key="ModernCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+
+        <!-- Estilo para inputs con recorte visible -->
+        <Style x:Key="ModernConfigInput" TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#94A3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="bd" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#64748B"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="White"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#2563EB"/>
+                                <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para PasswordBox con recorte visible -->
+        <Style x:Key="ModernConfigPassword" TargetType="PasswordBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#94A3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="bd" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#64748B"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="White"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#2563EB"/>
+                                <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botón Primario -->
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="24,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="#1D4ED8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="#1E40AF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botón Respaldo -->
+        <Style x:Key="BtnSlate" TargetType="Button">
+            <Setter Property="Background" Value="#0F172A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="#1E293B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="35,25,35,25" MaxWidth="850" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 1. ENCABEZADO -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock Text="Configuración del Sistema" FontSize="24" FontWeight="Bold" Foreground="#0F172A"/>
+                <TextBlock Text="Ajustes operativos, identidad del gimnasio, control de acceso y copias de respaldo" FontSize="13" Foreground="#64748B" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <!-- 2. PARÁMETROS OPERATIVOS -->
+            <Border Grid.Row="1" Style="{StaticResource ModernCard}">
+                <StackPanel>
+                    <TextBlock Text="Parámetros de Cuota y Acceso" FontSize="15" FontWeight="Bold" Foreground="#0F172A"/>
+                    <TextBlock Text="Valores sugeridos para nuevas membresías y días de tolerancia permitidos" FontSize="11" Foreground="#64748B" Margin="0,2,0,12"/>
+                    
+                    <Border Height="1" Background="#E2E8F0" Margin="0,0,0,16"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Precio Cuota -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Precio Cuota Mensual ($):" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBox x:Name="TxtPrecioCuota" Style="{StaticResource ModernConfigInput}" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <!-- Días de Tolerancia -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Días de Tolerancia de Mora:" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBox x:Name="TxtDiasTolerancia" Style="{StaticResource ModernConfigInput}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 3. IDENTIDAD DEL GIMNASIO -->
+            <Border Grid.Row="2" Style="{StaticResource ModernCard}">
+                <StackPanel>
+                    <TextBlock Text="Identidad del Gimnasio" FontSize="15" FontWeight="Bold" Foreground="#0F172A"/>
+                    <TextBlock Text="Información visible en la barra lateral y en los comprobantes de pago" FontSize="11" Foreground="#64748B" Margin="0,2,0,12"/>
+
+                    <Border Height="1" Background="#E2E8F0" Margin="0,0,0,16"/>
+
+                    <!-- Nombre Establecimiento -->
+                    <StackPanel Margin="0,0,0,14">
+                        <TextBlock Text="Nombre del Establecimiento / Razón Social:" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                        <TextBox x:Name="TxtNombreGimnasio" Style="{StaticResource ModernConfigInput}"/>
+                    </StackPanel>
+
+                    <!-- Teléfono y Dirección -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Teléfono / WhatsApp de Contacto:" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBox x:Name="TxtTelefono" Style="{StaticResource ModernConfigInput}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Dirección / Sucursal:" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBox x:Name="TxtDireccion" Style="{StaticResource ModernConfigInput}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 4. SEGURIDAD Y CONTROL DE ACCESO -->
+            <Border Grid.Row="3" Style="{StaticResource ModernCard}">
+                <StackPanel>
+                    <TextBlock Text="Seguridad y Control de Acceso" FontSize="15" FontWeight="Bold" Foreground="#0F172A"/>
+                    <TextBlock Text="Protege Caja y Cobranzas y Reportes. Para definir o modificar la clave, validá la actual" FontSize="11" Foreground="#64748B" Margin="0,2,0,12"/>
+
+                    <Border Height="1" Background="#E2E8F0" Margin="0,0,0,16"/>
+
+                    <Grid Margin="0,0,0,18">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Contraseña Actual -->
+                        <StackPanel x:Name="PnlClaveActual" Grid.Column="0">
+                            <TextBlock Text="Contraseña Actual:" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <PasswordBox x:Name="TxtClaveActual" Style="{StaticResource ModernConfigPassword}"/>
+                        </StackPanel>
+
+                        <!-- Nueva Contraseña -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Nueva Contraseña (o dejar vacío para quitar):" FontWeight="SemiBold" Foreground="#334155" FontSize="12" Margin="0,0,0,6"/>
+                            <PasswordBox x:Name="TxtClaveNueva" Style="{StaticResource ModernConfigPassword}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Button Content="Guardar Cambios" 
+                            Style="{StaticResource BtnPrimary}"
+                            HorizontalAlignment="Right" 
+                            Click="BtnGuardar_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 5. RESPALDO Y RESTAURACIÓN DE BASE DE DATOS -->
+            <Border Grid.Row="4" Style="{StaticResource ModernCard}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,20,0">
+                        <TextBlock Text="Copia de Respaldo y Restauración" FontSize="15" FontWeight="Bold" Foreground="#0F172A"/>
+                        <TextBlock Text="Exportá una copia manual o seleccioná un backup existente (de OneDrive o pendrive) para restaurar el sistema." 
+                                   FontSize="12" Foreground="#64748B" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- Botones de Acción -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="Restaurar Copia" 
+                                Style="{StaticResource BtnSlate}" 
+                                Background="#475569"
+                                Margin="0,0,10,0"
+                                Click="BtnRestaurarBackup_Click"/>
+
+                        <Button Content="Exportar Copia" 
+                                Style="{StaticResource BtnSlate}" 
+                                Click="BtnBackup_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

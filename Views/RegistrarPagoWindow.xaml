@@ -1,0 +1,177 @@
+<Window x:Class="GymManager.Views.RegistrarPagoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registrar Pago" 
+        Height="500" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#e1e1e2"
+        FontFamily="Segoe UI"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+<Window.Resources>
+        <Style x:Key="ModernCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#94A3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#2563EB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0"/>
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#94A3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="BorderBrush" Value="#2563EB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Botón primario verde -->
+        <Style x:Key="BtnSuccess" TargetType="Button">
+            <Setter Property="Background" Value="#16A34A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="#15803D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botón secundario gris -->
+        <Style x:Key="BtnSecondary" TargetType="Button">
+            <Setter Property="Background" Value="#E2E8F0"/>
+            <Setter Property="Foreground" Value="#475569"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="#CBD5E1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="18">
+        <Border Style="{StaticResource ModernCard}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- 0: Título -->
+                    <RowDefinition Height="Auto"/> <!-- 1: Monto -->
+                    <RowDefinition Height="Auto"/> <!-- 2: Duración -->
+                    <RowDefinition Height="Auto"/> <!-- 3: Forma pago -->
+                    <RowDefinition Height="Auto"/> <!-- 4: Nuevo vencimiento -->
+                    <RowDefinition Height="Auto"/> <!-- 5: Botones -->
+                </Grid.RowDefinitions>
+
+                <!-- Cabecera -->
+                <TextBlock x:Name="TxtTituloSocio" 
+                           Grid.Row="0"
+                           Text="Socio: Juan Pérez" 
+                           FontSize="16" FontWeight="Bold" 
+                           Foreground="#0F172A"
+                           Margin="0,0,0,14"/>
+
+                <!-- Monto -->
+                <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                    <TextBlock Text="Monto ($):" FontSize="12" FontWeight="SemiBold" Foreground="#334155" Margin="0,0,0,4"/>
+                    <TextBox x:Name="TxtMonto"/>
+                </StackPanel>
+
+                <!-- Duración -->
+                <StackPanel Grid.Row="2" Margin="0,0,0,10">
+                    <TextBlock Text="Duración (días):" FontSize="12" FontWeight="SemiBold" Foreground="#334155" Margin="0,0,0,4"/>
+                    <ComboBox x:Name="CmbDuracion" SelectedIndex="0" SelectionChanged="CmbDuracion_SelectionChanged">
+                        <ComboBoxItem Content="30 días (1 Mes)" Tag="30"/>
+                        <ComboBoxItem Content="15 días (Quincena)" Tag="15"/>
+                        <ComboBoxItem Content="90 días (Trimestre)" Tag="90"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Forma de Pago -->
+                <StackPanel Grid.Row="3" Margin="0,0,0,12">
+                    <TextBlock Text="Forma de pago:" FontSize="12" FontWeight="SemiBold" Foreground="#334155" Margin="0,0,0,4"/>
+                    <ComboBox x:Name="CmbFormaPago" SelectedIndex="0">
+                        <ComboBoxItem Content="Efectivo"/>
+                        <ComboBoxItem Content="Transferencia"/>
+                        <ComboBoxItem Content="Débito / Crédito"/>
+                        <ComboBoxItem Content="Bonificación / Regalo"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Resumen de Nuevo Vencimiento -->
+                <Border Grid.Row="4" Background="#F1F5F9" Padding="12,10" CornerRadius="6" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Nuevo vencimiento:" FontSize="11" FontWeight="SemiBold" Foreground="#64748B"/>
+                        <TextBlock x:Name="TxtNuevoVencimiento" Text="01/01/2026" FontSize="16" FontWeight="Bold" Foreground="#1E3A8A" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Botones al pie -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancelar" 
+                            Style="{StaticResource BtnSecondary}" 
+                            Margin="0,0,8,0" 
+                            IsCancel="True"/>
+                    <Button Content="Confirmar Pago" 
+                            Style="{StaticResource BtnSuccess}" 
+                            Click="BtnConfirmar_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

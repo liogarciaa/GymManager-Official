@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GymManager.csproj" />
+  <Project Path="GymManager.Tests/GymManager.Tests.csproj" />
+</Solution>
